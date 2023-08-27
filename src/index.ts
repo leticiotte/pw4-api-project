@@ -1,4 +1,4 @@
-import { server } from './server/Server';
+import { server } from './Server';
 import 'dotenv/config';
 
 server.listen(process.env.PORT, () => {

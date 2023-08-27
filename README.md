@@ -6,3 +6,7 @@ Tecnologias usadas:
 3. Jest
 4. Supertest
 5. MongoDB
+
+## Guide
+1. Startar localmente: npm start
+2. Gerar build: npx tsc
