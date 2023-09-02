@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "bb7d1229-8e63-45bd-a944-2edb93cac817",
+		"name": "PW4 API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15486487"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Create student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Letícia Gonçalves\",\n    \"studentNumber\": \"SC3011534\",\n    \"birthDate\": \"14/03/2002\",\n    \"gender\": \"feminine\",\n    \"email\": \"leticia@email.com\",\n    \"phone\": \"016991380686\",\n    \"classId\": \"teste\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/students",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/students",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get student by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/students/bf2855a1-6543-4e79-aceb-72fb623a645b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students",
+								"bf2855a1-6543-4e79-aceb-72fb623a645b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update student",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Letícia E. Gonçalves\",\n    \"studentNumber\": \"SC3011534\",\n    \"birthDate\": \"14/03/2002\",\n    \"gender\": \"feminine\",\n    \"email\": \"leticia@email.com\",\n    \"phone\": \"016991380686\",\n    \"classId\": \"pw4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/students/bf2855a1-6543-4e79-aceb-72fb623a645b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students",
+								"bf2855a1-6543-4e79-aceb-72fb623a645b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/students/bf2855a1-6543-4e79-aceb-72fb623a645b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students",
+								"bf2855a1-6543-4e79-aceb-72fb623a645b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Classes",
+			"item": [
+				{
+					"name": "Create class",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"2020-01\",\n    \"name\": \"Turma 1\",\n    \"course\": \"ADS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/classes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List classes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get class by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/00c5ad57-b30b-441a-9ccf-f83b8b0f86eb",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update class",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"2020-02\",\n    \"name\": \"Turma 1\",\n    \"course\": \"TPG\",\n    \"id\": \"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/classes/00c5ad57-b30b-441a-9ccf-f83b8b0f86eb",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete class",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/00c5ad57-b30b-441a-9ccf-f83b8b0f86eb",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "Create subject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"PW4\",\n    \"description\": \"Programação para Web 4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subjects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List classes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get subject by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/e40d8747-2e07-4de8-ac2c-13300fc6b703",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								"e40d8747-2e07-4de8-ac2c-13300fc6b703"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update subject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"RC2\",\n    \"description\": \"Redes de computadores 2\",\n    \"id\": \"e40d8747-2e07-4de8-ac2c-13300fc6b703\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subjects/e40d8747-2e07-4de8-ac2c-13300fc6b703",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								"e40d8747-2e07-4de8-ac2c-13300fc6b703"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete subject",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/e40d8747-2e07-4de8-ac2c-13300fc6b703",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								"e40d8747-2e07-4de8-ac2c-13300fc6b703"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

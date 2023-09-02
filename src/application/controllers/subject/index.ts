@@ -5,7 +5,7 @@ import * as findById from './FindById';
 import * as update from './Update';
 
 
-export const ClassController = {
+export const SubjectsController = {
     ...create,
     ...findAll,
     ...findById,
