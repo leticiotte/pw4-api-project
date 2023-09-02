@@ -1,5 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
 import 'dotenv/config';
+import { DatabaseError } from '../../shared/errors/DatabaseError';
 
 const uri = process.env.MONGO_URI;
 const dbName = process.env.MONGO_DATABASE;

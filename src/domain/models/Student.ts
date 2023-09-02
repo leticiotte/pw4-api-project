@@ -7,5 +7,6 @@ export type Student = {
     birthDate: string;
     gender: GenderEnum;
     email: string;
-    phone?: string
+    phone?: string;
+    classId: string;
 }
