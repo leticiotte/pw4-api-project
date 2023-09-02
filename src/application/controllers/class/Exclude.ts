@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Joi from 'joi';
-import { StudentRepository } from '../../../domain/repositories/StudentRepository';
-import { StudentRepositoryImpl } from '../../../infrastructure/repositories/impl/StudentRepositoryImpl';
+import { ClassRepository } from '../../../domain/repositories/ClassRepository';
+import { ClassRepositoryImpl } from '../../../infrastructure/repositories/impl/ClassRepositoryImpl';
 import { InvalidDataError } from '../../../shared/errors/InvalidDataError';
 import logger from '../../../shared/utils/logger';
 
-const studentRepository: StudentRepository = new StudentRepositoryImpl();
+const classRepository: ClassRepository = new ClassRepositoryImpl();
 
 interface IParamsProps {
     id: string
@@ -25,7 +25,7 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
 
     try {
         const id: string = params.id;
-        studentRepository.delete(id);
+        classRepository.delete(id);
         return res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
         next(error);

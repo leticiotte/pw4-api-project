@@ -1,4 +1,4 @@
-import e, { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Joi from 'joi';
 import { GenderEnum } from '../../../domain/models/enums/GenderEnum';
@@ -14,7 +14,7 @@ interface IParamsProps {
     id: string
 }
 
-export const update = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
+export const update = async (req: Request<IParamsProps, {}, Student>, res: Response, next: NextFunction) => {
     const params: IParamsProps = req.params;
     const student: Student = req.body;
     const validateIdResult = validateId(params);

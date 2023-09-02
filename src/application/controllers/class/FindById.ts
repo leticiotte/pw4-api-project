@@ -1,18 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Joi from 'joi';
-import { StudentRepository } from '../../../domain/repositories/StudentRepository';
-import { StudentRepositoryImpl } from '../../../infrastructure/repositories/impl/StudentRepositoryImpl';
+import { Class } from '../../../domain/models/Class';
+import { ClassRepository } from '../../../domain/repositories/ClassRepository';
+import { ClassRepositoryImpl } from '../../../infrastructure/repositories/impl/ClassRepositoryImpl';
 import { InvalidDataError } from '../../../shared/errors/InvalidDataError';
 import logger from '../../../shared/utils/logger';
 
-const studentRepository: StudentRepository = new StudentRepositoryImpl();
+const classRepository: ClassRepository = new ClassRepositoryImpl();
 
 interface IParamsProps {
     id: string
 }
 
-export const exclude = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
+export const findById = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
     const params: IParamsProps = req.params;
     const validationResult = validateId(params);
 
@@ -25,8 +26,8 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
 
     try {
         const id: string = params.id;
-        studentRepository.delete(id);
-        return res.status(StatusCodes.NO_CONTENT).send();
+        const c: Class = classRepository.findById(id);
+        return res.status(StatusCodes.OK).json(c);
     } catch (error) {
         next(error);
         return;

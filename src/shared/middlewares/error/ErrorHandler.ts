@@ -1,5 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { ClassNotFoundError } from '../../errors/ClassNotFoundError';
 import { DatabaseError } from '../../errors/DatabaseError';
 import { InvalidDataError } from '../../errors/InvalidDataError';
 import { StudentNotFoundError } from '../../errors/StudentNotFoundError';
@@ -14,8 +15,8 @@ const errorHandler: ErrorRequestHandler = (err: Error, req: Request, res: Respon
         const errorResponse: IErrorResponse = {
             error: {
                 code: '0001',
-                message: err.message,
-                details: err.details
+                details: err.details,
+                message: err.message
             }
         };
         return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
@@ -27,8 +28,21 @@ const errorHandler: ErrorRequestHandler = (err: Error, req: Request, res: Respon
         const errorResponse: IErrorResponse = {
             error: {
                 code: '0002',
-                message: err.message,
-                details: err.details
+                details: err.details,
+                message: err.message
+            }
+        };
+        return res.status(StatusCodes.NOT_FOUND).json(errorResponse);
+    }
+
+    if (err instanceof ClassNotFoundError) {
+        logger.warn('ClassNotFoundError type');
+
+        const errorResponse: IErrorResponse = {
+            error: {
+                code: '0003',
+                details: err.details,
+                message: err.message
             }
         };
         return res.status(StatusCodes.NOT_FOUND).json(errorResponse);
