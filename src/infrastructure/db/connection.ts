@@ -1,31 +1,29 @@
-import { MongoClient, Db } from 'mongodb';
 import 'dotenv/config';
-import { DatabaseError } from '../../shared/errors/DatabaseError';
+import { Sequelize } from 'sequelize';
 
-const uri = process.env.MONGO_URI;
-const dbName = process.env.MONGO_DATABASE;
+const database_schema = process.env.DATABASE_SCHEMA as string;
+const database_username = process.env.DATABASE_USERNAME as string;
+const database_password = process.env.DATABASE_PASSWORD as string;
 
-let client: MongoClient;
-let db: Db;
-
-async function connect() {
-    if (uri == undefined) {
-        console.error('Undefined uri');
-        throw new DatabaseError('Mongo uri is undefined');
+const sequelize = new Sequelize(
+    database_schema,
+    database_username,
+    database_password,
+    {
+        host: 'localhost',
+        port: 3306,
+        dialect: 'mysql',
+        logging: true
     }
-    client = new MongoClient(uri);
+);
 
+(async () => {
     try {
-        await client.connect();
-        db = client.db(dbName);
-        console.log('Connected to the database');
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
     } catch (error) {
-        console.error('Error connecting to the database', error);
+        console.error('Unable to connect to the database:', error);
     }
-}
+})();
 
-function getDB() {
-    return db;
-}
-
-export { connect, getDB };
+export { sequelize };
