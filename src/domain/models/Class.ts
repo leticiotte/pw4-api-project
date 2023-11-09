@@ -1,6 +1,9 @@
+import { Student } from './Student';
+
 export type Class = {
-    id?: string;
+    id?: number;
     key: string;
     name: string;
     course: string;
+    students?: Student[];
 }

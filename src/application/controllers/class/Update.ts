@@ -10,7 +10,7 @@ import logger from '../../../shared/utils/logger';
 const classRepository: ClassRepository = new ClassRepositoryImpl();
 
 interface IParamsProps {
-    id: string
+    id: number
 }
 
 export const update = async (req: Request<IParamsProps, {}, Class>, res: Response, next: NextFunction) => {
@@ -33,7 +33,7 @@ export const update = async (req: Request<IParamsProps, {}, Class>, res: Respons
     }
 
     try {
-        const id: string = params.id;
+        const id: number = params.id;
         const updatedClass: Class = classRepository.update(id, classBody);
         return res.status(StatusCodes.OK).json(updatedClass);
     } catch (error) {

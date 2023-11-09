@@ -20,7 +20,8 @@ export const classes: Class[] = [
         'key': '2020-01',
         'name': 'Turma 1',
         'course': 'ADS',
-        'id': '00c5ad57-b30b-441a-9ccf-f83b8b0f86eb'
+        'id': 1,
+        'students': []
     }
 ];
 export const subjects: Subject[] = [

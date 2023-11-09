@@ -10,7 +10,7 @@ import logger from '../../../shared/utils/logger';
 const classRepository: ClassRepository = new ClassRepositoryImpl();
 
 interface IParamsProps {
-    id: string
+    id: number
 }
 
 export const findById = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
@@ -25,7 +25,7 @@ export const findById = async (req: Request<IParamsProps>, res: Response, next: 
     }
 
     try {
-        const id: string = params.id;
+        const id: number = params.id;
         const c: Class = classRepository.findById(id);
         return res.status(StatusCodes.OK).json(c);
     } catch (error) {

@@ -8,7 +8,7 @@ import { ClassRepositoryImpl } from '../../../infrastructure/repositories/impl/C
 const classRepository: ClassRepository = new ClassRepositoryImpl();
 
 export const findAll = async (req: Request<{}, {}, Student>, res: Response, next: NextFunction) => {
-    const classes: Class[] = classRepository.findAll();
+    const classes: Class[] = await classRepository.findAll();
 
     return res.status(StatusCodes.OK).json(classes);
 };

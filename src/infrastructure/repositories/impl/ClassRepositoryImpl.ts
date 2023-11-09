@@ -1,18 +1,30 @@
-import { classes } from '../../db/data';
-import { v4 as uuidv4 } from 'uuid';
-import logger from '../../../shared/utils/logger';
-import { ClassRepository } from '../../../domain/repositories/ClassRepository';
 import { Class } from '../../../domain/models/Class';
+import { ClassRepository } from '../../../domain/repositories/ClassRepository';
 import { ClassNotFoundError } from '../../../shared/errors/ClassNotFoundError';
+import logger from '../../../shared/utils/logger';
+import { classes } from '../../db/data';
+import { ClassDb } from '../../db/tables/ClassDb';
+
 
 export class ClassRepositoryImpl implements ClassRepository {
-    findAll(): Class[] {
+    async findAll(): Promise<Class[]> {
         logger.info('ClassRepository findAll');
+        const results = await ClassDb.findAll();
+        const classes: Class[] = results.map(c => {
+            return {
+                id: c.id,
+                key: c.key,
+                name: c.name,
+                course: c.course,
+                students: []
+            };
+        });
 
         return classes;
     }
 
-    findById(id: string): Class {
+
+    findById(id: number): Class {
         logger.info(`ClassRepository findById: ${id}`);
 
         const index = classes.findIndex(c => c.id == id);
@@ -27,14 +39,13 @@ export class ClassRepositoryImpl implements ClassRepository {
     create(newClass: Class): Class {
         logger.info('ClassRepository create');
 
-        const id = uuidv4();
-        newClass.id = id;
+        newClass.id = 1;
         classes.push(newClass);
 
         return newClass;
     }
 
-    update(id: string, updatedClass: Class): Class {
+    update(id: number, updatedClass: Class): Class {
         logger.info(`ClassRepository update: ${id}`);
 
         const index = classes.findIndex(c => c.id == id);
@@ -47,7 +58,7 @@ export class ClassRepositoryImpl implements ClassRepository {
         return updatedClass;
     }
 
-    delete(id: string): boolean {
+    delete(id: number): boolean {
         logger.info(`ClassRepository delete: ${id}`);
 
         const index = classes.findIndex(c => c.id == id);
