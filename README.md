@@ -5,7 +5,8 @@ Tecnologias usadas:
 2. Typescript
 3. Jest
 4. Supertest
-5. MongoDB
+5. Sequelize
+6. MySql
 
 ## Guide
 1. Startar localmente: npm start
