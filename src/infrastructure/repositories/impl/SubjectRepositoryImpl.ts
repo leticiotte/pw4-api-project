@@ -1,63 +1,101 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Subject } from '../../../domain/models/Subject';
 import { SubjectRepository } from '../../../domain/repositories/SubjectRepository';
+import { DatabaseError } from '../../../shared/errors/DatabaseError';
 import { SubjectNotFoundError } from '../../../shared/errors/SubjectNotFoundError';
 import logger from '../../../shared/utils/logger';
-import { subjects } from '../../db/data';
+import { SubjectDb } from '../../db/tables/SubjectDb';
+import { subjectDbArrayIntoSubjectArray, subjectDbIntoSubject } from '../../db/utils/SubjectDbUtils';
 
 export class SubjectRepositoryImpl implements SubjectRepository {
-    findAll(): Subject[] {
+    async findAll(): Promise<Subject[]> {
         logger.info('SubjectRepository findAll');
+
+        const results = await SubjectDb.findAll().catch((error) => {
+            console.error('Erro ao procurar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao procurar registro');
+        });
+
+        const subjects: Subject[] = subjectDbArrayIntoSubjectArray(results);
 
         return subjects;
     }
 
-    findById(id: string): Subject {
+    async findById(id: number): Promise<Subject> {
         logger.info(`SubjectRepository findById: ${id}`);
 
-        const index = subjects.findIndex(subject => subject.id == id);
-        if (index == -1) {
+
+        const result = await SubjectDb.findByPk(id).catch((error) => {
+            console.error('Erro ao procurar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao procurar registro');
+        });
+
+        if (result == null) {
             logger.error('Subject not found');
             throw new SubjectNotFoundError('Disciplina não encontrado');
         }
 
-        return subjects[index];
+        return subjectDbIntoSubject(result);
     }
 
-    create(subject: Subject): Subject {
+    async create(subject: Subject): Promise<Subject> {
         logger.info('SubjectRepository create');
 
-        const id = uuidv4();
-        subject.id = id;
-        subjects.push(subject);
+        const result = await SubjectDb.create(subject).catch((error) => {
+            console.error('Erro ao atualizar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao atualizar registro');
+        });
 
-        return subject;
+        return subjectDbIntoSubject(result);
     }
 
-    update(id: string, updatedSubject: Subject): Subject {
+    async update(id: number, updatedSubject: Subject): Promise<Subject> {
         logger.info(`SubjectRepository update: ${id}`);
 
-        const index = subjects.findIndex(subject => subject.id == id);
-        if (index == -1) {
-            logger.error('Subject not found');
-            throw new SubjectNotFoundError('Disciplina não encontrado');
-        }
+        try {
+            const [rowsUpdated] = await SubjectDb.update(updatedSubject, {
+                where: {
+                    id: id
+                }
+            });
 
-        updatedSubject.id = id;
-        subjects[index] = updatedSubject;
-        return updatedSubject;
+            if (rowsUpdated > 0) {
+                const updatedModel = await SubjectDb.findByPk(id);
+
+                if (updatedModel) {
+                    return subjectDbIntoSubject(updatedModel.toJSON());
+                } else {
+                    logger.error('Subject not found after update');
+                    throw new SubjectNotFoundError('Disciplina não encontrado');
+                }
+            } else {
+                logger.error('Subject not found');
+                throw new SubjectNotFoundError('Disciplina não encontrado');
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao atualizar registro');
+        }
     }
 
-    delete(id: string): boolean {
+    async delete(id: number): Promise<boolean> {
         logger.info(`SubjectRepository delete: ${id}`);
 
-        const index = subjects.findIndex(subject => subject.id == id);
-        if (index == -1) {
-            logger.error('Subject not found');
-            throw new SubjectNotFoundError('Disciplina não encontrado');
-        }
+        try {
+            const rowsAffected = await SubjectDb.destroy({
+                where: {
+                    id: id
+                }
+            });
 
-        subjects.splice(index, 1);
-        return true;
+            if (rowsAffected > 0) {
+                return true;
+            } else {
+                logger.error('Subject not found');
+                throw new SubjectNotFoundError('Disciplina não encontrado');
+            }
+        } catch (error) {
+            console.error('Erro ao excluir registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao excluir registro');
+        }
     }
 }

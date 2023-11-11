@@ -10,7 +10,7 @@ import logger from '../../../shared/utils/logger';
 const subjectRepository: SubjectRepository = new SubjectRepositoryImpl();
 
 interface IParamsProps {
-    id: string
+    id: number
 }
 
 export const update = async (req: Request<IParamsProps, {}, Subject>, res: Response, next: NextFunction) => {
@@ -34,8 +34,8 @@ export const update = async (req: Request<IParamsProps, {}, Subject>, res: Respo
     }
 
     try {
-        const id: string = params.id;
-        const updateSubject: Subject = subjectRepository.update(id, subject);
+        const id: number = params.id;
+        const updateSubject: Subject = await subjectRepository.update(id, subject);
         return res.status(StatusCodes.OK).json(updateSubject);
     } catch (error) {
         next(error);

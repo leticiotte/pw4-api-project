@@ -9,7 +9,7 @@ import logger from '../../../shared/utils/logger';
 const subjectRepository: SubjectRepository = new SubjectRepositoryImpl();
 
 interface IParamsProps {
-    id: string
+    id: number
 }
 
 export const exclude = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
@@ -24,8 +24,8 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
     }
 
     try {
-        const id: string = params.id;
-        subjectRepository.delete(id);
+        const id: number = params.id;
+        await subjectRepository.delete(id);
         return res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
         next(error);

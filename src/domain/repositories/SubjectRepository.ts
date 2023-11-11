@@ -1,9 +1,9 @@
 import { Subject } from '../models/Subject';
 
 export interface SubjectRepository {
-    findAll(): Subject[];
-    findById(id: string): Subject;
-    create(subject: Subject): Subject;
-    update(id: string, updatedSubject: Subject): Subject;
-    delete(id: string): boolean;
+    findAll(): Promise<Subject[]>;
+    findById(id: number): Promise<Subject>;
+    create(subject: Subject): Promise<Subject>;
+    update(id: number, updatedSubject: Subject): Promise<Subject>;
+    delete(id: number): Promise<boolean>;
 }

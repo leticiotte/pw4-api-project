@@ -20,9 +20,9 @@ export const create = async (req: Request<{}, {}, Subject>, res: Response, next:
         return;
     }
 
-    const createdSubject: Subject = subjectRepository.create(subject);
+    const createdSubject: Subject = await subjectRepository.create(subject);
 
-    return res.status(StatusCodes.OK).json(createdSubject);
+    return res.status(StatusCodes.CREATED).json(createdSubject);
 };
 
 const studentSchema = Joi.object<Subject>({

@@ -7,7 +7,7 @@ import { SubjectRepositoryImpl } from '../../../infrastructure/repositories/impl
 const subjectRepository: SubjectRepository = new SubjectRepositoryImpl();
 
 export const findAll = async (req: Request<{}, {}, Subject>, res: Response, next: NextFunction) => {
-    const subjects: Subject[] = subjectRepository.findAll();
+    const subjects: Subject[] = await subjectRepository.findAll();
 
     return res.status(StatusCodes.OK).json(subjects);
 };

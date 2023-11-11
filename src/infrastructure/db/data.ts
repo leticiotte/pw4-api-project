@@ -28,6 +28,6 @@ export const subjects: Subject[] = [
     {
         'name': 'PW4',
         'description': 'Programação para Web 4',
-        'id': 'e40d8747-2e07-4de8-ac2c-13300fc6b703'
+        'id': 2
     }
 ];
