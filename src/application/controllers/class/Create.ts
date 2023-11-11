@@ -22,7 +22,7 @@ export const create = async (req: Request<{}, {}, Class>, res: Response, next: N
 
     const createdClass: Class = await classRepository.create(newClass);
 
-    return res.status(StatusCodes.OK).json(createdClass);
+    return res.status(StatusCodes.CREATED).json(createdClass);
 };
 
 const classSchema = Joi.object<Class>({
