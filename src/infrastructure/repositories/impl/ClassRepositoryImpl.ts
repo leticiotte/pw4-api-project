@@ -1,72 +1,92 @@
 import { Class } from '../../../domain/models/Class';
 import { ClassRepository } from '../../../domain/repositories/ClassRepository';
 import { ClassNotFoundError } from '../../../shared/errors/ClassNotFoundError';
+import { DatabaseError } from '../../../shared/errors/DatabaseError';
 import logger from '../../../shared/utils/logger';
-import { classes } from '../../db/data';
 import { ClassDb } from '../../db/tables/ClassDb';
+import { classDbArrayIntoClassArray, classDbIntoClass } from '../../db/utils/ClassDbUtils';
 
 
 export class ClassRepositoryImpl implements ClassRepository {
     async findAll(): Promise<Class[]> {
         logger.info('ClassRepository findAll');
         const results = await ClassDb.findAll();
-        const classes: Class[] = results.map(c => {
-            return {
-                id: c.id,
-                key: c.key,
-                name: c.name,
-                course: c.course,
-                students: []
-            };
-        });
+        const classes: Class[] = classDbArrayIntoClassArray(results);
 
         return classes;
     }
 
 
-    findById(id: number): Class {
+    async findById(id: number): Promise<Class> {
         logger.info(`ClassRepository findById: ${id}`);
+        const result = await ClassDb.findByPk(id);
 
-        const index = classes.findIndex(c => c.id == id);
-        if (index == -1) {
+        if (result == null) {
             logger.error('Class not found');
             throw new ClassNotFoundError('Turma não encontrada');
         }
 
-        return classes[index];
+        return classDbIntoClass(result);
     }
 
-    create(newClass: Class): Class {
+    async create(newClass: Class): Promise<Class> {
         logger.info('ClassRepository create');
+        const result = await ClassDb.create(newClass).catch((error) => {
+            console.error('Erro ao atualizar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao atualizar registro');
+        });
 
-        newClass.id = 1;
-        classes.push(newClass);
-
-        return newClass;
+        return classDbIntoClass(result);
     }
 
-    update(id: number, updatedClass: Class): Class {
+    async update(id: number, updatedClass: Class): Promise<Class> {
         logger.info(`ClassRepository update: ${id}`);
 
-        const index = classes.findIndex(c => c.id == id);
-        if (index == -1) {
-            logger.error('Class not found');
-            throw new ClassNotFoundError('Turma não encontrada');
+        try {
+            const [rowsUpdated] = await ClassDb.update(updatedClass, {
+                where: {
+                    id: id
+                }
+            });
+
+            if (rowsUpdated > 0) {
+                const updatedModel = await ClassDb.findByPk(id);
+
+                if (updatedModel) {
+                    return classDbIntoClass(updatedModel.toJSON());
+                } else {
+                    logger.error('Class not found after update');
+                    throw new ClassNotFoundError('Turma não encontrada após a atualização');
+                }
+            } else {
+                logger.error('Class not found');
+                throw new ClassNotFoundError('Turma não encontrada');
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao atualizar registro');
         }
-        updatedClass.id = id;
-        classes[index] = updatedClass;
-        return updatedClass;
     }
 
-    delete(id: number): boolean {
+    async delete(id: number): Promise<boolean> {
         logger.info(`ClassRepository delete: ${id}`);
 
-        const index = classes.findIndex(c => c.id == id);
-        if (index == -1) {
-            logger.error('Class not found');
-            throw new ClassNotFoundError('Turma não encontrada');
+        try {
+            const rowsAffected = await ClassDb.destroy({
+                where: {
+                    id: id
+                }
+            });
+
+            if (rowsAffected > 0) {
+                return true;
+            } else {
+                logger.error('Class not found');
+                throw new ClassNotFoundError('Turma não encontrada');
+            }
+        } catch (error) {
+            console.error('Erro ao excluir registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao excluir registro');
         }
-        classes.splice(index, 1);
-        return true;
     }
 }

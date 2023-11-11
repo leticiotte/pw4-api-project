@@ -44,7 +44,7 @@ export const update = async (req: Request<IParamsProps, {}, Subject>, res: Respo
 };
 
 const paramsSchema = Joi.object<IParamsProps>({
-    id: Joi.string().required()
+    id: Joi.number().required()
 });
 
 function validateId(params: IParamsProps): Joi.ValidationResult {
@@ -52,7 +52,7 @@ function validateId(params: IParamsProps): Joi.ValidationResult {
 }
 
 const subjectSchema = Joi.object<Subject>({
-    id: Joi.string().optional(),
+    id: Joi.number().optional(),
     name: Joi.string().required(),
     description: Joi.string().required()
 });

@@ -26,7 +26,7 @@ export const findById = async (req: Request<IParamsProps>, res: Response, next: 
 
     try {
         const id: number = params.id;
-        const c: Class = classRepository.findById(id);
+        const c: Class = await classRepository.findById(id);
         return res.status(StatusCodes.OK).json(c);
     } catch (error) {
         next(error);
@@ -35,7 +35,7 @@ export const findById = async (req: Request<IParamsProps>, res: Response, next: 
 };
 
 const paramsSchema = Joi.object<IParamsProps>({
-    id: Joi.string().required()
+    id: Joi.number().required()
 });
 
 function validateId(params: IParamsProps): Joi.ValidationResult {

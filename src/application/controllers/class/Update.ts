@@ -34,7 +34,7 @@ export const update = async (req: Request<IParamsProps, {}, Class>, res: Respons
 
     try {
         const id: number = params.id;
-        const updatedClass: Class = classRepository.update(id, classBody);
+        const updatedClass: Class = await classRepository.update(id, classBody);
         return res.status(StatusCodes.OK).json(updatedClass);
     } catch (error) {
         next(error);
@@ -43,7 +43,7 @@ export const update = async (req: Request<IParamsProps, {}, Class>, res: Respons
 };
 
 const paramsSchema = Joi.object<IParamsProps>({
-    id: Joi.string().required()
+    id: Joi.number().required()
 });
 
 function validateId(params: IParamsProps): Joi.ValidationResult {
@@ -51,7 +51,7 @@ function validateId(params: IParamsProps): Joi.ValidationResult {
 }
 
 const classSchema = Joi.object<Class>({
-    id: Joi.string().optional(),
+    id: Joi.number().optional(),
     key: Joi.string().required(),
     name: Joi.string().required(),
     course: Joi.string().required()

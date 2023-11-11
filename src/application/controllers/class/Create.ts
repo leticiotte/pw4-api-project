@@ -20,7 +20,7 @@ export const create = async (req: Request<{}, {}, Class>, res: Response, next: N
         return;
     }
 
-    const createdClass: Class = classRepository.create(newClass);
+    const createdClass: Class = await classRepository.create(newClass);
 
     return res.status(StatusCodes.OK).json(createdClass);
 };

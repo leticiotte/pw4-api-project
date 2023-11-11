@@ -34,7 +34,7 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
 };
 
 const paramsSchema = Joi.object<IParamsProps>({
-    id: Joi.string().required()
+    id: Joi.number().required()
 });
 
 function validateId(params: IParamsProps): Joi.ValidationResult {

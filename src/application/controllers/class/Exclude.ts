@@ -9,7 +9,7 @@ import logger from '../../../shared/utils/logger';
 const classRepository: ClassRepository = new ClassRepositoryImpl();
 
 interface IParamsProps {
-    id: string
+    id: number
 }
 
 export const exclude = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
@@ -24,8 +24,8 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
     }
 
     try {
-        const id: string = params.id;
-        classRepository.delete(id);
+        const id: number = params.id;
+        await classRepository.delete(id);
         return res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
         next(error);
@@ -34,7 +34,7 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
 };
 
 const paramsSchema = Joi.object<IParamsProps>({
-    id: Joi.string().required()
+    id: Joi.number().required()
 });
 
 function validateId(params: IParamsProps): Joi.ValidationResult {

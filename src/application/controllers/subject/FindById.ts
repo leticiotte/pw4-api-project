@@ -35,7 +35,7 @@ export const findById = async (req: Request<IParamsProps>, res: Response, next: 
 };
 
 const paramsSchema = Joi.object<IParamsProps>({
-    id: Joi.string().required()
+    id: Joi.number().required()
 });
 
 function validateId(params: IParamsProps): Joi.ValidationResult {
