@@ -10,7 +10,11 @@ import { classDbArrayIntoClassArray, classDbIntoClass } from '../../db/utils/Cla
 export class ClassRepositoryImpl implements ClassRepository {
     async findAll(): Promise<Class[]> {
         logger.info('ClassRepository findAll');
-        const results = await ClassDb.findAll();
+
+        const results = await ClassDb.findAll().catch((error) => {
+            console.error('Erro ao procurar registros: ', error);
+            throw new DatabaseError('Erro de banco de dados ao procurar registros');
+        });
         const classes: Class[] = classDbArrayIntoClassArray(results);
 
         return classes;
@@ -19,7 +23,11 @@ export class ClassRepositoryImpl implements ClassRepository {
 
     async findById(id: number): Promise<Class> {
         logger.info(`ClassRepository findById: ${id}`);
-        const result = await ClassDb.findByPk(id);
+
+        const result = await ClassDb.findByPk(id).catch((error) => {
+            console.error('Erro ao procurar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao procurar registro');
+        });
 
         if (result == null) {
             logger.error('Class not found');
@@ -31,6 +39,7 @@ export class ClassRepositoryImpl implements ClassRepository {
 
     async create(newClass: Class): Promise<Class> {
         logger.info('ClassRepository create');
+
         const result = await ClassDb.create(newClass).catch((error) => {
             console.error('Erro ao atualizar registro: ', error);
             throw new DatabaseError('Erro de banco de dados ao atualizar registro');
