@@ -1,9 +1,13 @@
+import { Op } from 'sequelize';
 import { Class } from '../../../domain/models/Class';
+import { Student } from '../../../domain/models/Student';
 import { ClassRepository } from '../../../domain/repositories/ClassRepository';
 import { ClassNotFoundError } from '../../../shared/errors/ClassNotFoundError';
 import { DatabaseError } from '../../../shared/errors/DatabaseError';
+import { ForeignKeyConstraintError } from '../../../shared/errors/ForeignKeyConstraintError';
 import logger from '../../../shared/utils/logger';
 import { ClassDb } from '../../db/tables/ClassDb';
+import { StudentDb } from '../../db/tables/StudentDb';
 import { classDbArrayIntoClassArray, classDbIntoClass } from '../../db/utils/ClassDbUtils';
 
 
@@ -37,12 +41,18 @@ export class ClassRepositoryImpl implements ClassRepository {
         return classDbIntoClass(result);
     }
 
+    async findStudentsById(id: number): Promise<Student[]> {
+        logger.info('ClassRepository findStudentsById');
+
+        return this.findStudentsByClassId(id);
+    }
+
     async create(newClass: Class): Promise<Class> {
         logger.info('ClassRepository create');
 
         const result = await ClassDb.create(newClass).catch((error) => {
-            console.error('Erro ao atualizar registro: ', error);
-            throw new DatabaseError('Erro de banco de dados ao atualizar registro');
+            console.error('Erro ao criar registro: ', error);
+            throw new DatabaseError('Erro de banco de dados ao criar registro');
         });
 
         return classDbIntoClass(result);
@@ -80,6 +90,13 @@ export class ClassRepositoryImpl implements ClassRepository {
     async delete(id: number): Promise<boolean> {
         logger.info(`ClassRepository delete: ${id}`);
 
+        logger.info('Verify if class has enrolled students');
+        const students: Student[] = await this.findStudentsByClassId(id);
+        if (students.length != 0) {
+            logger.error('Class is being used as ForeignKey');
+            throw new ForeignKeyConstraintError('A classe possui alunos');
+        }
+
         try {
             const rowsAffected = await ClassDb.destroy({
                 where: {
@@ -97,5 +114,28 @@ export class ClassRepositoryImpl implements ClassRepository {
             console.error('Erro ao excluir registro: ', error);
             throw new DatabaseError('Erro de banco de dados ao excluir registro');
         }
+    }
+
+    private async findStudentsByClassId(classId: number): Promise<Student[]> {
+        logger.info('ClassRepository findStudentsByClassId');
+
+        const whereClause = {
+            where: {
+                classId: {
+                    [Op.eq]: classId,
+                }
+            }
+        };
+
+        const students: Student[] = await StudentDb.findAll(whereClause).catch((error) => {
+            console.error('Erro ao procurar registros: ', error);
+            throw new DatabaseError('Erro de banco de dados ao procurar registros');
+        });
+
+        students.map(s => {
+            delete s.class;
+        });
+
+        return students;
     }
 }

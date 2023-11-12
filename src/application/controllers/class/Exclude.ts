@@ -26,6 +26,7 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
     try {
         const id: number = params.id;
         await classRepository.delete(id);
+
         return res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
         next(error);

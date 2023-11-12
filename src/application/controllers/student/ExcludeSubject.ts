@@ -9,23 +9,25 @@ import logger from '../../../shared/utils/logger';
 const studentRepository: StudentRepository = new StudentRepositoryImpl();
 
 interface IParamsProps {
-    id: number
+    id: number,
+    subjectId: number
 }
 
-export const exclude = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
+export const excludeSubject = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
     const params: IParamsProps = req.params;
-    const validationResult = validateId(params);
+    const validationResult = validatePathIds(params);
 
     if (validationResult.error) {
         logger.error('Id inválido');
-        const error = new InvalidDataError('Informe um id corretamente!');
+        const error = new InvalidDataError('Informe os ids corretamente!');
         next(error);
         return;
     }
 
     try {
         const id: number = params.id;
-        await studentRepository.delete(id);
+        const subjectId: number = params.subjectId;
+        await studentRepository.deleteSubject(id, subjectId);
 
         return res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
@@ -35,10 +37,11 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
 };
 
 const paramsSchema = Joi.object<IParamsProps>({
-    id: Joi.number().required()
+    id: Joi.number().required(),
+    subjectId: Joi.number().required()
 });
 
-function validateId(params: IParamsProps): Joi.ValidationResult {
+function validatePathIds(params: IParamsProps): Joi.ValidationResult {
     return paramsSchema.validate(params);
 }
 

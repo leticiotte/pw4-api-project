@@ -1,12 +1,16 @@
+import { Class } from './Class';
 import { GenderEnum } from './enums/GenderEnum';
+import { Subject } from './Subject';
 
 export type Student = {
-    id?: string;
+    id?: number;
     name: string;
     studentNumber: string;
     birthDate: string;
     gender: GenderEnum;
     email: string;
     phone?: string;
-    classId: string;
+    classId: number;
+    class?: Class;
+    subjects?: Subject[];
 }

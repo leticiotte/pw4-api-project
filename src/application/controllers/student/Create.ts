@@ -21,9 +21,14 @@ export const create = async (req: Request<{}, {}, Student>, res: Response, next:
         return;
     }
 
-    const createdStudent: Student = studentRepository.create(student);
+    try {
+        const createdStudent: Student = await studentRepository.create(student);
 
-    return res.status(StatusCodes.OK).json(createdStudent);
+        return res.status(StatusCodes.CREATED).json({ student: createdStudent });
+    } catch (error) {
+        next(error);
+        return;
+    }
 };
 
 const studentSchema = Joi.object<Student>({
@@ -34,7 +39,7 @@ const studentSchema = Joi.object<Student>({
     gender: Joi.string().valid(...Object.values(GenderEnum)).required(),
     email: Joi.string().email().required(),
     phone: Joi.string().optional(),
-    classId: Joi.string().required(),
+    classId: Joi.number().required(),
 });
 
 function validateStudent(student: Student): Joi.ValidationResult {

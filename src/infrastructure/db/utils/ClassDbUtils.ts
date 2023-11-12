@@ -7,8 +7,7 @@ export function classDbArrayIntoClassArray(results: ClassDb[]): Class[] {
             id: c.id,
             key: c.key,
             name: c.name,
-            course: c.course,
-            students: []
+            course: c.course
         };
     });
 }
@@ -18,7 +17,6 @@ export function classDbIntoClass(result: ClassDb): Class {
         id: result.id,
         key: result.key,
         name: result.name,
-        course: result.course,
-        students: []
+        course: result.course
     };
 }

@@ -1,9 +1,14 @@
 import { Student } from '../models/Student';
+import { Subject } from '../models/Subject';
 
 export interface StudentRepository {
-    findAll(): Student[];
-    findById(id: string): Student;
-    create(student: Student): Student;
-    update(id: string, updatedStudent: Student): Student;
-    delete(id: string): boolean;
+    findAll(): Promise<Student[]>;
+    findById(id: number): Promise<Student>;
+    findSubjectsById(id: number): Promise<Subject[]>;
+    findStudentsByClassId(classId: number): Promise<Student[]>;
+    create(student: Student): Promise<Student>;
+    addSubject(id: number, subjectId: number): Promise<boolean>;
+    deleteSubject(id: number, subjectId: number): Promise<boolean>;
+    update(id: number, updatedStudent: Student): Promise<Student>;
+    delete(id: number): Promise<boolean>;
 }

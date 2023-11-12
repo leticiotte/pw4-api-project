@@ -11,7 +11,7 @@ import logger from '../../../shared/utils/logger';
 const studentRepository: StudentRepository = new StudentRepositoryImpl();
 
 interface IParamsProps {
-    id: string
+    id: number
 }
 
 export const update = async (req: Request<IParamsProps, {}, Student>, res: Response, next: NextFunction) => {
@@ -34,9 +34,10 @@ export const update = async (req: Request<IParamsProps, {}, Student>, res: Respo
     }
 
     try {
-        const id: string = params.id;
-        const updatedStudent: Student = studentRepository.update(id, student);
-        return res.status(StatusCodes.OK).json(updatedStudent);
+        const id: number = params.id;
+        const updatedStudent: Student = await studentRepository.update(id, student);
+
+        return res.status(StatusCodes.OK).json({ student: updatedStudent });
     } catch (error) {
         next(error);
         return;

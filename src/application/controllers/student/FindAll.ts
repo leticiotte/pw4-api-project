@@ -7,7 +7,13 @@ import { StudentRepositoryImpl } from '../../../infrastructure/repositories/impl
 const studentRepository: StudentRepository = new StudentRepositoryImpl();
 
 export const findAll = async (req: Request<{}, {}, Student>, res: Response, next: NextFunction) => {
-    const students: Student[] = studentRepository.findAll();
 
-    return res.status(StatusCodes.OK).json(students);
+    try {
+        const students: Student[] = await studentRepository.findAll();
+
+        return res.status(StatusCodes.OK).json({ students });
+    } catch (error) {
+        next(error);
+        return;
+    }
 };

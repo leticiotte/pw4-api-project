@@ -19,19 +19,11 @@ CREATE TABLE student (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     studentNumber VARCHAR(50) NOT NULL,
-    birthDate DATE NOT NULL,
+    birthDate VARCHAR(50) NOT NULL,
     gender ENUM('feminine', 'masculine', 'non_binary', 'others') NOT NULL,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
     classId INT,
-    FOREIGN KEY (classId) REFERENCES class(id)
-);
-
-CREATE TABLE student_class (
-    studentId INT,
-    classId INT,
-    PRIMARY KEY (studentId, classId),
-    FOREIGN KEY (studentId) REFERENCES student(id),
     FOREIGN KEY (classId) REFERENCES class(id)
 );
 

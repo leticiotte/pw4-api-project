@@ -12,9 +12,15 @@ interface IParamsProps {
     id: number
 }
 
-export const exclude = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
+interface IBody {
+    subjectId: number
+}
+
+export const addSubject = async (req: Request<IParamsProps, {}, IBody>, res: Response, next: NextFunction) => {
     const params: IParamsProps = req.params;
+    const body: IBody = req.body;
     const validationResult = validateId(params);
+    const validateBodyResult = validateBody(body);
 
     if (validationResult.error) {
         logger.error('Id inválido');
@@ -23,9 +29,16 @@ export const exclude = async (req: Request<IParamsProps>, res: Response, next: N
         return;
     }
 
+    if (validateBodyResult.error) {
+        logger.error('Body inválido');
+        const error = new InvalidDataError('Body inválido');
+        next(error);
+        return;
+    }
+
     try {
         const id: number = params.id;
-        await studentRepository.delete(id);
+        await studentRepository.addSubject(id, body.subjectId);
 
         return res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
@@ -40,5 +53,13 @@ const paramsSchema = Joi.object<IParamsProps>({
 
 function validateId(params: IParamsProps): Joi.ValidationResult {
     return paramsSchema.validate(params);
+}
+
+const bodySchema = Joi.object<IBody>({
+    subjectId: Joi.number().required()
+});
+
+function validateBody(body: IBody): Joi.ValidationResult {
+    return bodySchema.validate(body);
 }
 

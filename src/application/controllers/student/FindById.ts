@@ -10,7 +10,7 @@ import logger from '../../../shared/utils/logger';
 const studentRepository: StudentRepository = new StudentRepositoryImpl();
 
 interface IParamsProps {
-    id: string
+    id: number
 }
 
 export const findById = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
@@ -25,9 +25,10 @@ export const findById = async (req: Request<IParamsProps>, res: Response, next: 
     }
 
     try {
-        const id: string = params.id;
-        const student: Student = studentRepository.findById(id);
-        return res.status(StatusCodes.OK).json(student);
+        const id: number = params.id;
+        const student: Student = await studentRepository.findById(id);
+
+        return res.status(StatusCodes.OK).json({ student });
     } catch (error) {
         next(error);
         return;

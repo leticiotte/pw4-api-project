@@ -35,7 +35,8 @@ export const update = async (req: Request<IParamsProps, {}, Class>, res: Respons
     try {
         const id: number = params.id;
         const updatedClass: Class = await classRepository.update(id, classBody);
-        return res.status(StatusCodes.OK).json(updatedClass);
+
+        return res.status(StatusCodes.OK).json({ class: updatedClass });
     } catch (error) {
         next(error);
         return;

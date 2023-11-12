@@ -27,7 +27,8 @@ export const findById = async (req: Request<IParamsProps>, res: Response, next: 
     try {
         const id: number = params.id;
         const c: Class = await classRepository.findById(id);
-        return res.status(StatusCodes.OK).json(c);
+
+        return res.status(StatusCodes.OK).json({ class: c });
     } catch (error) {
         next(error);
         return;

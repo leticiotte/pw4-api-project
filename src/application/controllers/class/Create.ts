@@ -20,9 +20,14 @@ export const create = async (req: Request<{}, {}, Class>, res: Response, next: N
         return;
     }
 
-    const createdClass: Class = await classRepository.create(newClass);
+    try {
+        const createdClass: Class = await classRepository.create(newClass);
 
-    return res.status(StatusCodes.CREATED).json(createdClass);
+        return res.status(StatusCodes.CREATED).json({ class: createdClass });
+    } catch (error) {
+        next(error);
+        return;
+    }
 };
 
 const classSchema = Joi.object<Class>({

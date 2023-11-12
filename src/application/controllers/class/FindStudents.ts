@@ -1,19 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Joi from 'joi';
-import { Subject } from '../../../domain/models/Subject';
-import { SubjectRepository } from '../../../domain/repositories/SubjectRepository';
-import { SubjectRepositoryImpl } from '../../../infrastructure/repositories/impl/SubjectRepositoryImpl';
+import { Student } from '../../../domain/models/Student';
+import { ClassRepository } from '../../../domain/repositories/ClassRepository';
+import { ClassRepositoryImpl } from '../../../infrastructure/repositories/impl/ClassRepositoryImpl';
 import { InvalidDataError } from '../../../shared/errors/InvalidDataError';
 import logger from '../../../shared/utils/logger';
 
-const subjectRepository: SubjectRepository = new SubjectRepositoryImpl();
+const classRepository: ClassRepository = new ClassRepositoryImpl();
 
 interface IParamsProps {
     id: number
 }
 
-export const findById = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
+export const findStudents = async (req: Request<IParamsProps>, res: Response, next: NextFunction) => {
     const params: IParamsProps = req.params;
     const validationResult = validateId(params);
 
@@ -26,9 +26,9 @@ export const findById = async (req: Request<IParamsProps>, res: Response, next: 
 
     try {
         const id: number = params.id;
-        const subject: Subject = await subjectRepository.findById(id);
-
-        return res.status(StatusCodes.OK).json({ subject });
+        await classRepository.findById(id);
+        const students: Student[] = await classRepository.findStudentsById(id);
+        return res.status(StatusCodes.OK).json({ students });
     } catch (error) {
         next(error);
         return;
