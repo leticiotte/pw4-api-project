@@ -10,13 +10,94 @@
 			"name": "Students",
 			"item": [
 				{
+					"name": "Subjects",
+					"item": [
+						{
+							"name": "Get student subjects by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/students/11/subjects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"students",
+										"11",
+										"subjects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get student subjects by id Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"subjectId\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/students/11/subjects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"students",
+										"11",
+										"subjects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete student subject",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"subjectId\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/students/10/subjects/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"students",
+										"10",
+										"subjects",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Create student",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Letícia Gonçalves\",\n    \"studentNumber\": \"SC3011534\",\n    \"birthDate\": \"14/03/2002\",\n    \"gender\": \"feminine\",\n    \"email\": \"leticia@email.com\",\n    \"phone\": \"016991380686\",\n    \"classId\": \"teste\"\n}",
+							"raw": "{\n    \"name\": \"Danúbia Gonçalves\",\n    \"studentNumber\": \"SC3011530\",\n    \"birthDate\": \"23/12/1999\",\n    \"gender\": \"feminine\",\n    \"email\": \"danubia@email.com\",\n    \"phone\": \"016991380686\",\n    \"classId\": 3\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -58,13 +139,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/students/bf2855a1-6543-4e79-aceb-72fb623a645b",
+							"raw": "{{baseUrl}}/students/10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"students",
-								"bf2855a1-6543-4e79-aceb-72fb623a645b"
+								"10"
 							]
 						}
 					},
@@ -169,13 +250,32 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/classes/00c5ad57-b30b-441a-9ccf-f83b8b0f86eb",
+							"raw": "{{baseUrl}}/classes/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"classes",
-								"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get class students by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/3/students",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								"3",
+								"students"
 							]
 						}
 					},
@@ -188,7 +288,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"key\": \"2020-02\",\n    \"name\": \"Turma 1\",\n    \"course\": \"TPG\",\n    \"id\": \"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb\"\n}",
+							"raw": "{\n    \"key\": \"2020-02\",\n    \"name\": \"Turma 2\",\n    \"course\": \"TPG\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,13 +296,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/classes/00c5ad57-b30b-441a-9ccf-f83b8b0f86eb",
+							"raw": "{{baseUrl}}/classes/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"classes",
-								"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb"
+								"1"
 							]
 						}
 					},
@@ -214,13 +314,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/classes/00c5ad57-b30b-441a-9ccf-f83b8b0f86eb",
+							"raw": "{{baseUrl}}/classes/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"classes",
-								"00c5ad57-b30b-441a-9ccf-f83b8b0f86eb"
+								"1"
 							]
 						}
 					},
@@ -258,7 +358,7 @@
 					"response": []
 				},
 				{
-					"name": "List classes",
+					"name": "List subjects",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -287,6 +387,25 @@
 							"path": [
 								"subjects",
 								"e40d8747-2e07-4de8-ac2c-13300fc6b703"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get students subject by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/1/students",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								"1",
+								"students"
 							]
 						}
 					},
@@ -338,6 +457,33 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3333",
+			"type": "string"
 		}
 	]
 }
