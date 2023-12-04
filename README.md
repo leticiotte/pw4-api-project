@@ -1,6 +1,7 @@
 # API Rest
 Projeto desenvolvido na aula de PW4 (Programação Web 4)
-Tecnologias usadas:
+
+## Tecnologias usadas:
 1. Node
 2. Typescript
 3. Express
