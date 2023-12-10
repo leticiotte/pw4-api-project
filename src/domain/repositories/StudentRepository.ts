@@ -1,5 +1,5 @@
-import { Student } from '../models/Student';
-import { Subject } from '../models/Subject';
+import { Student } from "../models/Student";
+import { Subject } from "../models/Subject";
 
 export interface StudentRepository {
     findAll(): Promise<Student[]>;

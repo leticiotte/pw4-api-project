@@ -1,6 +1,6 @@
-import { DataTypes, Model } from 'sequelize';
-import { GenderEnum } from '../../../domain/models/enums/GenderEnum';
-import { sequelize } from '../connection';
+import { DataTypes, Model } from "sequelize";
+import { GenderEnum } from "../../../domain/models/enums/GenderEnum";
+import { sequelize } from "../connection";
 
 class StudentDb extends Model {
     declare id: number;
@@ -19,46 +19,51 @@ StudentDb.init(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: true,
-            primaryKey: true
+            primaryKey: true,
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         studentNumber: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         birthDate: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         gender: {
-            type: DataTypes.ENUM('feminine', 'masculine', 'non_binary', 'others'),
-            allowNull: false
+            type: DataTypes.ENUM(
+                "feminine",
+                "masculine",
+                "non_binary",
+                "others"
+            ),
+            allowNull: false,
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         phone: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
         classId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'class',
-                key: 'id'
-            }
-        }
+                model: "class",
+                key: "id",
+            },
+        },
     },
     {
         sequelize,
-        modelName: 'student',
+        modelName: "student",
         freezeTableName: true,
-        timestamps: false
+        timestamps: false,
     }
 );
 

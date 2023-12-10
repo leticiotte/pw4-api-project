@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../connection';
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../connection";
 
 class StudentSubjectDb extends Model {
     declare studentId: number;
@@ -13,27 +13,26 @@ StudentSubjectDb.init(
             allowNull: false,
             primaryKey: true,
             references: {
-                model: 'student',
-                key: 'id'
-            }
+                model: "student",
+                key: "id",
+            },
         },
         subjectId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             references: {
-                model: 'subject',
-                key: 'id'
-            }
+                model: "subject",
+                key: "id",
+            },
         },
     },
     {
         sequelize,
-        modelName: 'student_subject',
+        modelName: "student_subject",
         freezeTableName: true,
-        timestamps: false
+        timestamps: false,
     }
 );
-
 
 export { StudentSubjectDb };

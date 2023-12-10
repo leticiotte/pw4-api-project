@@ -1,4 +1,4 @@
-import winston, { createLogger, transports, format } from 'winston';
+import { createLogger, format, transports } from "winston";
 
 // Define os níveis de log personalizados
 const customLevels = {

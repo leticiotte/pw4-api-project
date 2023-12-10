@@ -1,4 +1,4 @@
-import { Student } from './Student';
+import { Student } from "./Student";
 
 export type Class = {
     id?: number;
@@ -6,4 +6,4 @@ export type Class = {
     name: string;
     course: string;
     students?: Student[];
-}
+};

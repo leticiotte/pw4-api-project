@@ -1,4 +1,4 @@
 export type StudentSubject = {
-    studentId: number,
-    subjectId: number
-}
+    studentId: number;
+    subjectId: number;
+};

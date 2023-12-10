@@ -1,8 +1,10 @@
-import { Student } from '../../../domain/models/Student';
-import { StudentDb } from '../tables/StudentDb';
+import { Student } from "../../../domain/models/Student";
+import { StudentDb } from "../tables/StudentDb";
 
-export function studentDbArrayIntoStudentArray(results: StudentDb[]): Student[] {
-    return results.map(s => {
+export function studentDbArrayIntoStudentArray(
+    results: StudentDb[]
+): Student[] {
+    return results.map((s) => {
         return {
             id: s.id,
             name: s.name,
@@ -11,7 +13,7 @@ export function studentDbArrayIntoStudentArray(results: StudentDb[]): Student[] 
             gender: s.gender,
             email: s.email,
             phone: s.phone,
-            classId: s.classId
+            classId: s.classId,
         };
     });
 }
@@ -25,6 +27,6 @@ export function studentDbIntoStudent(result: StudentDb): Student {
         gender: result.gender,
         email: result.email,
         phone: result.phone,
-        classId: result.classId
+        classId: result.classId,
     };
 }

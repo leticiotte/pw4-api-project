@@ -1,12 +1,16 @@
-import { NextFunction, Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import { Subject } from '../../../domain/models/Subject';
-import { SubjectRepository } from '../../../domain/repositories/SubjectRepository';
-import { SubjectRepositoryImpl } from '../../../infrastructure/repositories/impl/SubjectRepositoryImpl';
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { Subject } from "../../../domain/models/Subject";
+import { SubjectRepository } from "../../../domain/repositories/SubjectRepository";
+import { SubjectRepositoryImpl } from "../../../infrastructure/repositories/impl/SubjectRepositoryImpl";
 
 const subjectRepository: SubjectRepository = new SubjectRepositoryImpl();
 
-export const findAll = async (req: Request<{}, {}, Subject>, res: Response, next: NextFunction) => {
+export const findAll = async (
+    req: Request<{}, {}, Subject>,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const subjects: Subject[] = await subjectRepository.findAll();
 
@@ -15,5 +19,4 @@ export const findAll = async (req: Request<{}, {}, Subject>, res: Response, next
         next(error);
         return;
     }
-
 };

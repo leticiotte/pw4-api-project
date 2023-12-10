@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../connection';
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../connection";
 
 class SubjectDb extends Model {
     declare id: number;
@@ -13,22 +13,22 @@ SubjectDb.init(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         description: {
             type: DataTypes.TEXT,
-            allowNull: false
-        }
+            allowNull: false,
+        },
     },
     {
         sequelize,
-        modelName: 'subject',
+        modelName: "subject",
         freezeTableName: true,
-        timestamps: false
+        timestamps: false,
     }
 );
 

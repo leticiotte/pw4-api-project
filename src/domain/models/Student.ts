@@ -1,6 +1,6 @@
-import { Class } from './Class';
-import { GenderEnum } from './enums/GenderEnum';
-import { Subject } from './Subject';
+import { Class } from "./Class";
+import { GenderEnum } from "./enums/GenderEnum";
+import { Subject } from "./Subject";
 
 export type Student = {
     id?: number;
@@ -13,4 +13,4 @@ export type Student = {
     classId: number;
     class?: Class;
     subjects?: Subject[];
-}
+};
