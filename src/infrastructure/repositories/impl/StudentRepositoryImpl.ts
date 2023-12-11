@@ -215,6 +215,12 @@ export class StudentRepositoryImpl implements StudentRepository {
                 throw new StudentNotFoundError("Estudante não encontrado");
             }
         } catch (error) {
+            if (error instanceof ForeignKeyConstraintError) {
+                console.error("Foreign key error: ", error);
+                throw new DatabaseError(
+                    "Aluno possui disciplinas em que está matriculado"
+                );
+            }
             console.error("Erro ao excluir registro: ", error);
             throw new DatabaseError(
                 "Erro de banco de dados ao excluir registro"
