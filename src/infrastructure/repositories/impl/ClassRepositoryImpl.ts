@@ -74,7 +74,7 @@ export class ClassRepositoryImpl implements ClassRepository {
         const classToCompareChanges: Class = { ...updatedClass, id: id };
 
         if (_.isEqual(findRegisterOnDb.dataValues, classToCompareChanges)) {
-            console.log("No changes detected");
+            logger.warn("No changes detected");
             return null;
         }
 

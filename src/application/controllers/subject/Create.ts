@@ -18,7 +18,7 @@ export const create = async (
     const validateSubjectResult = validateSubject(subject);
 
     if (validateSubjectResult.error) {
-        logger.error("Body inválido");
+        logger.error("[subject-create] Invalid body");
         const error = new InvalidDataError("Body inválido");
         next(error);
         return;

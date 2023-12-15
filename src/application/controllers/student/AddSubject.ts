@@ -27,14 +27,14 @@ export const addSubject = async (
     const validateBodyResult = validateBody(body);
 
     if (validationResult.error) {
-        logger.error("Id inválido");
+        logger.error("[student-create-subject] Invalid id");
         const error = new InvalidDataError("Informe um id corretamente!");
         next(error);
         return;
     }
 
     if (validateBodyResult.error) {
-        logger.error("Body inválido");
+        logger.error("[student-create-subject] Invalid body");
         const error = new InvalidDataError("Body inválido");
         next(error);
         return;

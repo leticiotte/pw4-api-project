@@ -161,10 +161,8 @@ export class StudentRepositoryImpl implements StudentRepository {
         }
         const studentToCompareChanges: Student = { ...updatedStudent, id: id };
 
-        console.log(findRegisterOnDb.dataValues);
-        console.log(studentToCompareChanges);
         if (_.isEqual(findRegisterOnDb.dataValues, studentToCompareChanges)) {
-            console.log("No changes detected");
+            logger.warn("No changes detected");
             return null;
         }
 

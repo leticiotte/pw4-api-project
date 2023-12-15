@@ -24,13 +24,13 @@ export const update = async (
     const validateStudentResult = validateClass(classBody);
 
     if (validateIdResult.error) {
-        logger.error("Id inválido");
+        logger.error("[class-update] Invalid id");
         const error = new InvalidDataError("Informe um id corretamente!");
         next(error);
         return;
     }
     if (validateStudentResult.error) {
-        logger.error("Body inválido");
+        logger.error("[class-update] Invalid body");
         const error = new InvalidDataError("Body inválido");
         next(error);
         return;

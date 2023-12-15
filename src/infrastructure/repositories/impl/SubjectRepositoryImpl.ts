@@ -121,7 +121,7 @@ export class SubjectRepositoryImpl implements SubjectRepository {
         const subjectToCompareChanges: Subject = { ...updatedSubject, id: id };
 
         if (_.isEqual(findRegisterOnDb.dataValues, subjectToCompareChanges)) {
-            console.log("No changes detected");
+            logger.warn("No changes detected");
             return null;
         }
 

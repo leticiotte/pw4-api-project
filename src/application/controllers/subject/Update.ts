@@ -24,14 +24,14 @@ export const update = async (
     const validateSubjectResult = validateSubject(subject);
 
     if (validateIdResult.error) {
-        logger.error("Id inválido");
+        logger.error("[subject-update] Invalid id");
         const error = new InvalidDataError("Informe um id corretamente!");
         next(error);
         return;
     }
 
     if (validateSubjectResult.error) {
-        logger.error("Body inválido");
+        logger.error("[subject-update] Invalid body");
         const error = new InvalidDataError("Body inválido");
         next(error);
         return;

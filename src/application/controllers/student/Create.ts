@@ -19,7 +19,7 @@ export const create = async (
     const validateStudentResult = validateStudent(student);
 
     if (validateStudentResult.error) {
-        logger.error("Body inválido");
+        logger.error("[student-create] Invalid body");
         const error = new InvalidDataError("Body inválido");
         next(error);
         return;
