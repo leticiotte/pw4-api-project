@@ -29,7 +29,7 @@ export const excludeSubject = async (
     }
 
     try {
-        const id: number = params.id;
+        const id: number = Number(params.id);
         const subjectId: number = params.subjectId;
         await studentRepository.deleteSubject(id, subjectId);
 

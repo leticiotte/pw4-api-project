@@ -38,11 +38,13 @@ export const update = async (
     }
 
     try {
-        const id: number = params.id;
-        const updateSubject: Subject = await subjectRepository.update(
+        const id: number = Number(params.id);
+        const updateSubject: Subject | null = await subjectRepository.update(
             id,
             subject
         );
+        if (updateSubject == null)
+            return res.status(StatusCodes.NO_CONTENT).send();
 
         return res.status(StatusCodes.OK).json({ subject: updateSubject });
     } catch (error) {

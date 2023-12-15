@@ -29,7 +29,7 @@ export const findById = async (
     }
 
     try {
-        const id: number = params.id;
+        const id: number = Number(params.id);
         const student: Student = await studentRepository.findById(id);
 
         return res.status(StatusCodes.OK).json({ student });

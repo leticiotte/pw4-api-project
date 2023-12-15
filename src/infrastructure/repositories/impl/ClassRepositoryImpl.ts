@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { Op } from "sequelize";
 import { Class } from "../../../domain/models/Class";
 import { Student } from "../../../domain/models/Student";
@@ -63,8 +64,19 @@ export class ClassRepositoryImpl implements ClassRepository {
         return classDbIntoClass(result);
     }
 
-    async update(id: number, updatedClass: Class): Promise<Class> {
+    async update(id: number, updatedClass: Class): Promise<Class | null> {
         logger.info(`ClassRepository update: ${id}`);
+        const findRegisterOnDb = await ClassDb.findByPk(id);
+        if (!findRegisterOnDb) {
+            logger.error("Class not found");
+            throw new ClassNotFoundError("Classe não encontrada");
+        }
+        const classToCompareChanges: Class = { ...updatedClass, id: id };
+
+        if (_.isEqual(findRegisterOnDb.dataValues, classToCompareChanges)) {
+            console.log("No changes detected");
+            return null;
+        }
 
         try {
             const [rowsUpdated] = await ClassDb.update(updatedClass, {

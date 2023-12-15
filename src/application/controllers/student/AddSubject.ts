@@ -41,7 +41,7 @@ export const addSubject = async (
     }
 
     try {
-        const id: number = params.id;
+        const id: number = Number(params.id);
         await studentRepository.addSubject(id, body.subjectId);
 
         return res.status(StatusCodes.NO_CONTENT).send();

@@ -6,6 +6,6 @@ export interface SubjectRepository {
     findById(id: number): Promise<Subject>;
     findAllStudents(subjectId: number): Promise<Student[]>;
     create(subject: Subject): Promise<Subject>;
-    update(id: number, updatedSubject: Subject): Promise<Subject>;
+    update(id: number, updatedSubject: Subject): Promise<Subject | null>;
     delete(id: number): Promise<boolean>;
 }

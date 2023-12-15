@@ -9,6 +9,6 @@ export interface StudentRepository {
     create(student: Student): Promise<Student>;
     addSubject(id: number, subjectId: number): Promise<boolean>;
     deleteSubject(id: number, subjectId: number): Promise<boolean>;
-    update(id: number, updatedStudent: Student): Promise<Student>;
+    update(id: number, updatedStudent: Student): Promise<Student | null>;
     delete(id: number): Promise<boolean>;
 }

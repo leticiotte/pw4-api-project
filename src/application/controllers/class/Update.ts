@@ -37,8 +37,14 @@ export const update = async (
     }
 
     try {
-        const id: number = params.id;
-        const updatedClass: Class = await classRepository.update(id, classBody);
+        const id: number = Number(params.id);
+        const updatedClass: Class | null = await classRepository.update(
+            id,
+            classBody
+        );
+
+        if (updatedClass == null)
+            return res.status(StatusCodes.NO_CONTENT).send();
 
         return res.status(StatusCodes.OK).json({ class: updatedClass });
     } catch (error) {

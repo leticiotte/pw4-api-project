@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { Op } from "sequelize";
 import { Student } from "../../../domain/models/Student";
 import { StudentSubject } from "../../../domain/models/StudentSubject";
@@ -46,7 +47,7 @@ export class SubjectRepositoryImpl implements SubjectRepository {
 
         if (result == null) {
             logger.error("Subject not found");
-            throw new SubjectNotFoundError("Disciplina não encontrado");
+            throw new SubjectNotFoundError("Disciplina não encontrada");
         }
 
         return subjectDbIntoSubject(result);
@@ -110,8 +111,19 @@ export class SubjectRepositoryImpl implements SubjectRepository {
         return subjectDbIntoSubject(result);
     }
 
-    async update(id: number, updatedSubject: Subject): Promise<Subject> {
+    async update(id: number, updatedSubject: Subject): Promise<Subject | null> {
         logger.info(`SubjectRepository update: ${id}`);
+        const findRegisterOnDb = await SubjectDb.findByPk(id);
+        if (!findRegisterOnDb) {
+            logger.error("Student not found");
+            throw new SubjectNotFoundError("Matéria não encontrado");
+        }
+        const subjectToCompareChanges: Subject = { ...updatedSubject, id: id };
+
+        if (_.isEqual(findRegisterOnDb.dataValues, subjectToCompareChanges)) {
+            console.log("No changes detected");
+            return null;
+        }
 
         try {
             const [rowsUpdated] = await SubjectDb.update(updatedSubject, {

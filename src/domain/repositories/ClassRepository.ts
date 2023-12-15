@@ -6,6 +6,6 @@ export interface ClassRepository {
     findById(id: number): Promise<Class>;
     findStudentsById(id: number): Promise<Student[]>;
     create(newClass: Class): Promise<Class>;
-    update(id: number, updatedClass: Class): Promise<Class>;
+    update(id: number, updatedClass: Class): Promise<Class | null>;
     delete(id: number): Promise<boolean>;
 }

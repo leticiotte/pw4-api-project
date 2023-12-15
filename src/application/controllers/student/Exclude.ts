@@ -28,7 +28,7 @@ export const exclude = async (
     }
 
     try {
-        const id: number = params.id;
+        const id: number = Number(params.id);
         await studentRepository.delete(id);
 
         return res.status(StatusCodes.NO_CONTENT).send();

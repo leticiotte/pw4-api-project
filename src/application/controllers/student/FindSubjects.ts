@@ -29,7 +29,7 @@ export const findSubjects = async (
     }
 
     try {
-        const id: number = params.id;
+        const id: number = Number(params.id);
         const subject: Subject[] = await studentRepository.findSubjectsById(id);
 
         return res.status(StatusCodes.OK).json({ subjects: subject });

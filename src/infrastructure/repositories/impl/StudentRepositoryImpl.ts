@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {
     ForeignKeyConstraintError,
     Op,
@@ -151,8 +152,21 @@ export class StudentRepositoryImpl implements StudentRepository {
         return true;
     }
 
-    async update(id: number, updatedStudent: Student): Promise<Student> {
+    async update(id: number, updatedStudent: Student): Promise<Student | null> {
         logger.info(`StudentRepository update: ${id}`);
+        const findRegisterOnDb = await StudentDb.findByPk(id);
+        if (!findRegisterOnDb) {
+            logger.error("Student not found");
+            throw new StudentNotFoundError("Estudante não encontrado");
+        }
+        const studentToCompareChanges: Student = { ...updatedStudent, id: id };
+
+        console.log(findRegisterOnDb.dataValues);
+        console.log(studentToCompareChanges);
+        if (_.isEqual(findRegisterOnDb.dataValues, studentToCompareChanges)) {
+            console.log("No changes detected");
+            return null;
+        }
 
         try {
             const [rowsUpdated] = await StudentDb.update(updatedStudent, {

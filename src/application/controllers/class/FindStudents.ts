@@ -29,7 +29,7 @@ export const findStudents = async (
     }
 
     try {
-        const id: number = params.id;
+        const id: number = Number(params.id);
         await classRepository.findById(id);
         const students: Student[] = await classRepository.findStudentsById(id);
         return res.status(StatusCodes.OK).json({ students });

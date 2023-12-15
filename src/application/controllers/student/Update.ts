@@ -25,24 +25,27 @@ export const update = async (
     const validateStudentResult = validateStudent(student);
 
     if (validateIdResult.error) {
-        logger.error("Id inválido");
+        logger.error("[student-update] Invalid id");
         const error = new InvalidDataError("Informe um id corretamente!");
         next(error);
         return;
     }
     if (validateStudentResult.error) {
-        logger.error("Body inválido");
+        logger.error("[student-update] Invalid body");
         const error = new InvalidDataError("Body inválido");
         next(error);
         return;
     }
 
     try {
-        const id: number = params.id;
-        const updatedStudent: Student = await studentRepository.update(
+        const id: number = Number(params.id);
+        const updatedStudent: Student | null = await studentRepository.update(
             id,
             student
         );
+
+        if (updatedStudent == null)
+            return res.status(StatusCodes.NO_CONTENT).send();
 
         return res.status(StatusCodes.OK).json({ student: updatedStudent });
     } catch (error) {
@@ -69,7 +72,7 @@ const studentSchema = Joi.object<Student>({
         .required(),
     email: Joi.string().email().required(),
     phone: Joi.string().optional(),
-    classId: Joi.string().required(),
+    classId: Joi.number().required(),
 });
 
 function validateStudent(student: Student): Joi.ValidationResult {
